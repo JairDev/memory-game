@@ -45,19 +45,14 @@ function ramdomStyle(i) {
   animation: show 4s linear ${ramDelay}s infinite`;
 }
 
-export function viewEasy(option) {
-  const textDifficulty = document.querySelector(".difficulty");
-  difficulty.style = "opacity: 0; z-index: 0";
-  let setDifficulty = `<h3>Difficulty: ${option}</h3>`;
-  textDifficulty.innerHTML = setDifficulty;
+export function reset() {
+  const loser = document.querySelector(".loser");
+  const win = document.querySelector(".winner");
+  loser.innerHTML = `<h3>Lose: 0</h3>`;
+  win.innerHTML = `<h3>Win: 0</h3>`;
 }
-export function viewMedium(option) {
-  const textDifficulty = document.querySelector(".difficulty");
-  difficulty.style = "opacity: 0; z-index: 0";
-  let setDifficulty = `<h3>Difficulty: ${option}</h3>`;
-  textDifficulty.innerHTML = setDifficulty;
-}
-export function viewHard(option) {
+
+export function view(option) {
   const textDifficulty = document.querySelector(".difficulty");
   difficulty.style = "opacity: 0; z-index: 0";
   let setDifficulty = `<h3>Difficulty: ${option}</h3>`;
@@ -70,16 +65,18 @@ export function viewWin(winCount) {
   winner.innerHTML = textWinner;
   win.style = "opacity: 1; z-index: 30";
 }
+
+export function viewLose(lost) {
+  const loser = document.querySelector(".loser");
+  let textLose = `<h3>Lose: ${lost}</h3>`;
+  loser.innerHTML = textLose;
+  lose.style = "opacity: 1; z-index: 40";
+}
+
 export function viewBestTime(time) {
   let min = Math.floor(time / 60);
   let seg = time % 60;
   const bestTime = document.querySelector(".best-time");
   let textBestTime = `<h3>Best time: ${min}:${seg < 10 ? '0' : ''}${seg}`;
   bestTime.innerHTML = textBestTime;
-}
-export function viewLose(lost) {
-  const loser = document.querySelector(".loser");
-  let textLose = `<h3>Lose: ${lost}</h3>`;
-  loser.innerHTML = textLose;
-  lose.style = "opacity: 1; z-index: 40";
 }

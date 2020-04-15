@@ -4,9 +4,6 @@ import "./img/brain.png";
 import {
   displayDiv,
   displayTime,
-  viewEasy,
-  viewMedium,
-  viewHard,
   viewWin,
   viewLose,
   viewBestTime,
@@ -15,6 +12,8 @@ import {
   win,
   lose,
   creatDivBrain,
+  reset,
+  view,
 } from "./js/views/baseview";
 
 const getEasy = JSON.parse(localStorage.getItem("bestTimeEasy")) || [];
@@ -29,17 +28,26 @@ let winnerCount = 0;
 
 creatDivBrain();
 
-function initEasy() {
+const initEasy = function () {
   let easyOption = 120;
   timer(easyOption);
-}
-function initMedium() {
+};
+const initMedium = function () {
   let mediumOption = 80;
   timer(mediumOption);
-}
-function initHard() {
+};
+const initHard = function () {
   let hardOption = 60;
   timer(hardOption);
+};
+
+function gameController(difficultyLevel, level, key) {
+  const option = document.querySelector(level);
+  view(option.dataset.option);
+  ramdomDiv();
+  state = {};
+  state[key] = new difficultyLevel();
+  console.log(state);
 }
 
 function timer(seg) {
@@ -177,28 +185,6 @@ function setStorage(time) {
   }
 }
 
-function easyController() {
-  const easyOption = document.querySelector(".easy");
-  viewEasy(easyOption.dataset.option);
-  ramdomDiv();
-  state = {};
-  state.easy = new initEasy();
-}
-function mediumController() {
-  const mediumOption = document.querySelector(".medium");
-  viewMedium(mediumOption.dataset.option);
-  ramdomDiv();
-  state = {};
-  state.medium = new initMedium();
-}
-function hardController() {
-  const hardOption = document.querySelector(".hard");
-  viewHard(hardOption.dataset.option);
-  ramdomDiv();
-  state = {};
-  state.hard = new initHard();
-}
-
 //events
 
 cards.addEventListener("click", memory);
@@ -207,30 +193,23 @@ difficulty.addEventListener("click", (e) => {
   const easy = e.target.closest(".easy");
   const medium = e.target.closest(".medium");
   const hard = e.target.closest(".hard");
-  const loser = document.querySelector(".loser");
-  const win = document.querySelector(".winner");
   if (easy) {
-    easyController();
-    loser.innerHTML = `<h3>Lose: 0</h3>`;
-    win.innerHTML = `<h3>Win: 0</h3>`;
+    gameController(initEasy, ".easy", "easy");
+    reset();
     if (getEasy[0]) {
       viewBestTime(Math.max(...getEasy));
     }
   }
   if (medium) {
-    viewMedium(medium.dataset.option);
-    mediumController();
-    loser.innerHTML = `<h3>Lose: 0</h3>`;
-    win.innerHTML = `<h3>Win: 0</h3>`;
+    gameController(initMedium, ".medium", "medium");
+    reset();
     if (getMedium[0]) {
       viewBestTime(Math.max(...getMedium));
     }
   }
   if (hard) {
-    viewHard(hard.dataset.option);
-    hardController();
-    loser.innerHTML = `<h3>Lose: 0</h3>`;
-    win.innerHTML = `<h3>Win: 0</h3>`;
+    gameController(initHard, ".hard", "hard");
+    reset();
     if (getHard[0]) {
       viewBestTime(Math.max(...getHard));
     }
@@ -247,7 +226,7 @@ win.addEventListener("click", (e) => {
       if (getEasy[0]) {
         viewBestTime(Math.max(...getEasy));
       }
-      easyController();
+      gameController(initEasy, ".easy", "easy");
     }
     if (state.medium) {
       win.style = "opacity: 0; z-index: 0";
@@ -255,7 +234,7 @@ win.addEventListener("click", (e) => {
       if (getMedium[0]) {
         viewBestTime(Math.max(...getMedium));
       }
-      mediumController();
+      gameController(initMedium, ".medium", "medium");
     }
     if (state.hard) {
       win.style = "opacity: 0; z-index: 0";
@@ -263,7 +242,7 @@ win.addEventListener("click", (e) => {
       if (getHard[0]) {
         viewBestTime(Math.max(...getHard));
       }
-      hardController();
+      gameController(initHard, ".hard", "hard");
     }
   }
   if (main) {
@@ -283,7 +262,7 @@ lose.addEventListener("click", (e) => {
       if (getEasy[0]) {
         viewBestTime(Math.max(...getEasy));
       }
-      easyController();
+      gameController(initEasy, ".easy", "easy");
     }
     if (state.medium) {
       lose.style = "opacity: 0; z-index: 0";
@@ -291,7 +270,7 @@ lose.addEventListener("click", (e) => {
       if (getMedium[0]) {
         viewBestTime(Math.max(...getMedium));
       }
-      mediumController();
+      gameController(initMedium, ".medium", "medium");
     }
     if (state.hard) {
       lose.style = "opacity: 0; z-index: 0";
@@ -299,7 +278,7 @@ lose.addEventListener("click", (e) => {
       if (getHard[0]) {
         viewBestTime(Math.max(...getHard));
       }
-      hardController();
+      gameController(initHard, ".hard", "hard");
     }
   }
   if (main) {
