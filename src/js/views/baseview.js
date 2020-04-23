@@ -59,18 +59,12 @@ export function view(option) {
   textDifficulty.innerHTML = setDifficulty;
 }
 
-export function viewWin(winCount) {
-  const winner = document.querySelector(".winner");
-  let textWinner = `<h3>Win: ${winCount}`;
-  winner.innerHTML = textWinner;
-  win.style = "opacity: 1; z-index: 30";
-}
-
-export function viewLose(lost) {
-  const loser = document.querySelector(".loser");
-  let textLose = `<h3>Lose: ${lost}</h3>`;
-  loser.innerHTML = textLose;
-  lose.style = "opacity: 1; z-index: 40";
+export function viewFinish(count, winOrLose, winnerOrLoser, str) {
+  const parentDiv = document.querySelector(winOrLose);
+  const div = document.querySelector(winnerOrLoser);
+  let textWinner = `<h3>${str}: ${count}`;
+  div.innerHTML = textWinner;
+  parentDiv.style = "opacity: 1; z-index: 30";
 }
 
 export function viewBestTime(time) {

@@ -14,6 +14,7 @@ import {
   creatDivBrain,
   reset,
   view,
+  viewFinish
 } from "./js/views/baseview";
 
 const getEasy = JSON.parse(localStorage.getItem("bestTimeEasy")) || [];
@@ -37,7 +38,7 @@ const initMedium = function () {
   timer(mediumOption);
 };
 const initHard = function () {
-  let hardOption = 60;
+  let hardOption = 1;
   timer(hardOption);
 };
 
@@ -46,8 +47,7 @@ function gameController(difficultyLevel, level, key) {
   view(option.dataset.option);
   ramdomDiv();
   state = {};
-  state[key] = new difficultyLevel();
-  console.log(state);
+  state[key]= new difficultyLevel();
 }
 
 function timer(seg) {
@@ -160,12 +160,12 @@ function finish(time, interval) {
     winnerCount += 1;
     setStorage(time);
     clearInterval(interval);
-    viewWin(winnerCount);
+    viewFinish(winnerCount, '.win', '.winner', 'Win')
     nodes.splice(0);
     return;
   } else if (nodes.length < nodesCount / 2 && time <= 0) {
     lostCount += 1;
-    viewLose(lostCount);
+    viewFinish(lostCount, '.lose', '.loser', 'Lose')
     nodes.splice(0);
   }
 }
