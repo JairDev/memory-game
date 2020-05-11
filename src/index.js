@@ -38,7 +38,7 @@ const initMedium = function () {
   timer(mediumOption);
 };
 const initHard = function () {
-  let hardOption = 1;
+  let hardOption = 60;
   timer(hardOption);
 };
 
@@ -72,7 +72,6 @@ function ramdomDiv() {
     "icon-git",
     "icon-firefox",
     "icon-file-openoffice",
-    "icon-tux",
     "icon-android",
     "icon-reddit",
     "icon-dropbox",
@@ -82,43 +81,9 @@ function ramdomDiv() {
     "icon-linkedin",
     "icon-stackoverflow",
     "icon-foursquare",
-  ];
-
-  let arrayCopy = [
-    "icon-flattr",
-    "icon-html-five2",
-    "icon-git",
-    "icon-firefox",
-    "icon-file-openoffice",
-    "icon-tux",
-    "icon-android",
-    "icon-reddit",
-    "icon-dropbox",
-    "icon-npm",
-    "icon-wordpress",
-    "icon-steam",
-    "icon-linkedin",
-    "icon-stackoverflow",
-    "icon-foursquare",
-  ];
-
-  let ramdomClass = array.map((e) => {
-    let ramdom = Math.floor(Math.random() * array.length);
-    let idx = array.splice(ramdom, 1);
-    let add = idx.forEach((e) => {
-      array.push(e);
-    });
-  });
-
-  let ramdomClassCopy = arrayCopy.map((e) => {
-    let ramdom = Math.floor(Math.random() * arrayCopy.length);
-    let idx = arrayCopy.splice(ramdom, 1);
-    let add = idx.forEach((e) => {
-      arrayCopy.push(e);
-    });
-  });
-  let concat = array.concat(arrayCopy);
-  displayDiv(concat);
+  ]
+  let newArr = [...array, ...array].sort(() => 0.5 - Math.random())
+  displayDiv(newArr);
 }
 
 function memory(e) {
