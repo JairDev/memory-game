@@ -117,6 +117,9 @@ body {
         z-index: 0;
         backface-visibility: hidden;
       }
+      & .card_front.rotate-card {
+        transform: rotate3d(0,1,0,180deg)
+      }
       & .card_back {
         border: 1px solid rgb(180, 175, 175);
         background-color: rgb(135, 104, 160);
