@@ -4,8 +4,6 @@ import "./img/brain.png";
 import {
   displayDiv,
   displayTime,
-  viewWin,
-  viewLose,
   viewBestTime,
   difficulty,
   cards,
@@ -38,16 +36,17 @@ const initMedium = function () {
   timer(mediumOption);
 };
 const initHard = function () {
-  let hardOption = 60;
+  let hardOption = 2;
   timer(hardOption);
 };
 
-function gameController(difficultyLevel, level, key) {
-  const option = document.querySelector(level);
+function gameController(key, difficultyLevel) {
+  const option = document.querySelector(`.${key}`);
   view(option.dataset.option);
   ramdomDiv();
   state = {};
-  state[key]= new difficultyLevel();
+  state[key] = key;
+  return difficultyLevel()
 }
 
 function timer(seg) {
@@ -72,6 +71,7 @@ function ramdomDiv() {
     "icon-git",
     "icon-firefox",
     "icon-file-openoffice",
+    "icon-tux",
     "icon-android",
     "icon-reddit",
     "icon-dropbox",
@@ -86,11 +86,14 @@ function ramdomDiv() {
   displayDiv(newArr);
 }
 
-function memory(e) {
+function cardsTransform(e) {
   let divs = e.target.closest(".card__content");
-  let f = divs.firstElementChild;
+  let firstChildDiv = divs.firstElementChild;
+  console.log(divs)
+  console.log(firstChildDiv)
   divs.classList.toggle("front");
-  f.style = "transform: rotate3d(0,1,0,180deg)";
+  // firstChildDiv.style = "transform: rotate3d(0,1,0,180deg)";
+  firstChildDiv.classList.add("rotate-card")
 
   if (divs.classList[1] === "front") {
     element.push(divs);
@@ -152,28 +155,28 @@ function setStorage(time) {
 
 //events
 
-cards.addEventListener("click", memory);
+cards.addEventListener("click", cardsTransform);
 
 difficulty.addEventListener("click", (e) => {
   const easy = e.target.closest(".easy");
   const medium = e.target.closest(".medium");
   const hard = e.target.closest(".hard");
   if (easy) {
-    gameController(initEasy, ".easy", "easy");
+    gameController("easy", initEasy);
     reset();
     if (getEasy[0]) {
       viewBestTime(Math.max(...getEasy));
     }
   }
   if (medium) {
-    gameController(initMedium, ".medium", "medium");
+    gameController("medium", initMedium);
     reset();
     if (getMedium[0]) {
       viewBestTime(Math.max(...getMedium));
     }
   }
   if (hard) {
-    gameController(initHard, ".hard", "hard");
+    gameController("hard", initHard);
     reset();
     if (getHard[0]) {
       viewBestTime(Math.max(...getHard));
@@ -191,7 +194,7 @@ win.addEventListener("click", (e) => {
       if (getEasy[0]) {
         viewBestTime(Math.max(...getEasy));
       }
-      gameController(initEasy, ".easy", "easy");
+      gameController("easy", initEasy);
     }
     if (state.medium) {
       win.style = "opacity: 0; z-index: 0";
@@ -199,7 +202,7 @@ win.addEventListener("click", (e) => {
       if (getMedium[0]) {
         viewBestTime(Math.max(...getMedium));
       }
-      gameController(initMedium, ".medium", "medium");
+      gameController("medium", initMedium);
     }
     if (state.hard) {
       win.style = "opacity: 0; z-index: 0";
@@ -207,7 +210,7 @@ win.addEventListener("click", (e) => {
       if (getHard[0]) {
         viewBestTime(Math.max(...getHard));
       }
-      gameController(initHard, ".hard", "hard");
+      gameController("hard", initHard);
     }
   }
   if (main) {
@@ -227,7 +230,7 @@ lose.addEventListener("click", (e) => {
       if (getEasy[0]) {
         viewBestTime(Math.max(...getEasy));
       }
-      gameController(initEasy, ".easy", "easy");
+      gameController("easy", initEasy);
     }
     if (state.medium) {
       lose.style = "opacity: 0; z-index: 0";
@@ -235,7 +238,7 @@ lose.addEventListener("click", (e) => {
       if (getMedium[0]) {
         viewBestTime(Math.max(...getMedium));
       }
-      gameController(initMedium, ".medium", "medium");
+      gameController("medium", initMedium);
     }
     if (state.hard) {
       lose.style = "opacity: 0; z-index: 0";
@@ -243,7 +246,7 @@ lose.addEventListener("click", (e) => {
       if (getHard[0]) {
         viewBestTime(Math.max(...getHard));
       }
-      gameController(initHard, ".hard", "hard");
+      gameController("hard", initHard);
     }
   }
   if (main) {
